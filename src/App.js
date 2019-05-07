@@ -11,6 +11,7 @@ import {
   Tool,
 } from 'react-paper-bindings';
 import styled from 'styled-components';
+import uuidv4 from 'uuid/v4';
 
 class App extends Component {
   constructor(props) {
@@ -46,9 +47,9 @@ class App extends Component {
   newCoordinate() {}
 
   onKeyDown(event) {
-    const array = this.state.circles
+    const array = this.state.circles;
 
-    const newId = '123';
+    const newId = uuidv4();
     const newCircle = {
       x: Math.floor(Math.random() * (this.box().width + 1)),
       y: Math.floor(Math.random() * (this.box().height + 1)),
@@ -60,7 +61,11 @@ class App extends Component {
     this.setState({ circles: array })
 
     setTimeout(() => {
-      // delete from state.circles where id === newId
+      if (newCircle.id === newId) {
+        const array = this.state.circles
+        const updateArr = array.filter(x => x!== newCircle);
+        this.setState({ circles: updateArr })
+      }
     }, 2000)
   }
 
