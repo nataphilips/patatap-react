@@ -18,6 +18,7 @@ class App extends Component {
 
     this.state = {
       mounted: false,
+      circles: [],
     }
 
     this._box = null
@@ -35,30 +36,41 @@ class App extends Component {
   componentDidMount() {
     this.setState({ mounted: true })
     window.addEventListener('resize', () => this.resizeWindow())
+    window.addEventListener('keydown', (e) => this.onKeyDown(e))
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.resizeWindow())
   }
 
-  makeGrid() {
-    const xDots = 10;
-    const yDots = 10;
+  newCoordinate() {}
 
-    const grid = []
+  onKeyDown(event) {
+    const array = this.state.circles
 
-    console.log(this.box().width, this.box().height)
-    for (var i = 0; i < xDots; i++) {
-      for (var j = 0; j < yDots; j++) {
-        const center = [
-          i * this.box().width / (xDots - 1),
-          j * this.box().height / (yDots -1),
-        ]
-        //console.log(center)
-        grid.push(<Circle center={center} radius={8} fillColor="pink" />)
-      }
+    const newId = '123';
+    const newCircle = {
+      x: Math.floor(Math.random() * (this.box().width + 1)),
+      y: Math.floor(Math.random() * (this.box().height + 1)),
+      color: this.newColor(),
+      id: newId,
     }
-    return grid;
+
+    array.push(newCircle)
+    this.setState({ circles: array })
+
+    setTimeout(() => {
+      // delete from state.circles where id === newId
+    }, 2000)
+  }
+
+  randomColorValue() {
+    return Math.floor(Math.random() * (255 + 1));
+  }
+
+  newColor() {
+    const color = {r: this.randomColorValue(), g: this.randomColorValue(), b: this.randomColorValue()};
+    return `rgb(${color.r}, ${color.g}, ${color.b})`
   }
 
   box() {
@@ -67,7 +79,7 @@ class App extends Component {
 
   render() {
     const { mounted } = this.state
-    mounted && console.log(' RENDER ', this.box().width, this.box().height)
+
     return (
       <AppContainer ref={ref => this._box = ref}>
       {mounted &&
@@ -76,7 +88,9 @@ class App extends Component {
             height={this.box().height}>
           <Layer>
             <Layer>
-              {this.makeGrid()}
+              {this.state.circles.map(circle => (
+                <Circle center={[circle.x, circle.y]} radius={8} fillColor={circle.color} />
+              ))}
             </Layer>
           </Layer>
         </PaperContainer>
