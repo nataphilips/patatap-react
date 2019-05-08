@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Stage, Layer, Circle, Text } from 'react-konva';
 import Konva from 'konva';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import uuidv4 from 'uuid/v4';
 import {Spring} from 'react-spring/renderprops';
+import {Howl, Howler} from 'howler';
 
 class App extends Component {
   constructor(props) {
@@ -15,16 +16,143 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', () => this.onKeyDown())
+    window.addEventListener('keydown', (event) => this.onKeyDown(event))
   }
-
-
-  componentWillUnmount() {
-  }
-
 
   onKeyDown(event) {
     const array = this.state.circles;
+    const keyData = {
+      q: {
+        sound: new Howl({
+          src: ['sounds/bubbles.mp3']
+        }),
+      },
+      w: {
+        sound: new Howl({
+          src: ['sounds/clay.mp3']
+        }),
+      },
+      e: {
+        sound: new Howl({
+          src: ['sounds/confetti.mp3']
+        }),
+      },
+      r: {
+        sound: new Howl({
+          src: ['sounds/corona.mp3']
+        }),
+      },
+        t: {
+        sound: new Howl({
+          src: ['sounds/dotted-spiral.mp3']
+        }),
+      },
+      y: {
+        sound: new Howl({
+          src: ['sounds/flash-1.mp3']
+        }),
+      },
+      u: {
+        sound: new Howl({
+          src: ['sounds/flash-2.mp3']
+        }),
+      },
+      i: {
+        sound: new Howl({
+          src: ['sounds/flash-3.mp3']
+        }),
+      },
+      o: {
+        sound: new Howl({
+          src: ['sounds/glimmer.mp3']
+        }),
+      },
+      p: {
+        sound: new Howl({
+          src: ['sounds/moon.mp3']
+        }),
+      },
+      a: {
+        sound: new Howl({
+          src: ['sounds/pinwheel.mp3']
+        }),
+      },
+      s: {
+        sound: new Howl({
+          src: ['sounds/piston-1.mp3']
+        }),
+      },
+        d: {
+        sound: new Howl({
+          src: ['sounds/piston-2.mp3']
+        }),
+      },
+      f: {
+        sound: new Howl({
+          src: ['sounds/prism-1.mp3']
+        }),
+      },
+      g: {
+        sound: new Howl({
+          src: ['sounds/prism-2.mp3']
+        }),
+      },
+      h: {
+        sound: new Howl({
+          src: ['sounds/prism-3.mp3']
+        }),
+      },
+      j: {
+        sound: new Howl({
+          src: ['sounds/splits.mp3']
+        }),
+      },
+      k: {
+        sound: new Howl({
+          src: ['sounds/squiggle.mp3']
+        }),
+      },
+      l: {
+        sound: new Howl({
+          src: ['sounds/strike.mp3']
+        }),
+      },
+      z: {
+        sound: new Howl({
+          src: ['sounds/suspension.mp3']
+        }),
+      },
+      x: {
+        sound: new Howl({
+          src: ['sounds/timer.mp3']
+        }),
+      },
+      c: {
+        sound: new Howl({
+          src: ['sounds/ufo.mp3']
+        }),
+      },
+      v: {
+        sound: new Howl({
+          src: ['sounds/veil.mp3']
+        }),
+      },
+      b: {
+        sound: new Howl({
+          src: ['sounds/wipe.mp3']
+        }),
+      },
+      n: {
+        sound: new Howl({
+          src: ['sounds/zig-zag.mp3']
+        }),
+      },
+      m: {
+        sound: new Howl({
+          src: ['sounds/moon.mp3']
+        }),
+      }
+    }
 
     const newId = uuidv4();
     const newCircle = {
@@ -37,6 +165,7 @@ class App extends Component {
 
     array.push(newCircle);
     this.setState({ circles: array });
+    keyData[event.key].sound.play();
 
     setTimeout(() => {
       if (newCircle.id === newId) {
@@ -71,21 +200,5 @@ class App extends Component {
 
 const StyledStage = styled(Stage)`
   background: black;
-`
-const AppContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
-`
-const zoom = keyframes`
-    0% {
-        transform: scale(1,1);
-    }
-    100% {
-        transform: scale(0,0);
-    }
-`
-const StyledCircle = styled.circle`
-  /* transform: scale(2); */
-  transition: transform 3s;
 `
 export default App;
