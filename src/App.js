@@ -159,7 +159,7 @@ class App extends Component {
       x: Math.floor(Math.random() * (window.innerWidth + 1)),
       y: Math.floor(Math.random() * (window.innerHeight + 1)),
       color: Konva.Util.getRandomColor(),
-      duration: ((Math.random() * 1.7) + 0.5) * 1000,
+      duration: ((Math.random() * 1.7) + 0.5) * 500,
       id: newId,
     }
 
@@ -181,7 +181,7 @@ class App extends Component {
       <StyledStage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
           {this.state.circles.map(circle => (
-            <Spring key={circle.id} config={{ duration: circle.duration }} from={{ radius: 100 }} to={{ radius: 0 }}>
+            <Spring key={circle.id} config={{ duration: circle.duration }} from={{ radius: 200 }} to={{ radius: 0 }}>
               {props => (
                 [
                   <Circle radius={props.radius} x={circle.x} y={circle.y} fill={circle.color} />,
