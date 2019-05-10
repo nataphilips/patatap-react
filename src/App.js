@@ -163,17 +163,19 @@ class App extends Component {
       id: newId,
     }
 
-    array.push(newCircle);
-    this.setState({ circles: array });
-    keyData[event.key].sound.play();
+    if (keyData[event.key]) {
+      array.push(newCircle);
+      this.setState({ circles: array });
+      keyData[event.key].sound.play();
 
-    setTimeout(() => {
-      if (newCircle.id === newId) {
-        const array = this.state.circles
-        const updateArr = array.filter(x => x!== newCircle);
-        this.setState({ circles: updateArr })
-      }
-    }, newCircle.duration)
+      setTimeout(() => {
+        if (newCircle.id === newId) {
+          const array = this.state.circles
+          const updateArr = array.filter(x => x!== newCircle);
+          this.setState({ circles: updateArr })
+        }
+      }, newCircle.duration)
+    }
   }
 
   render() {
